@@ -1,6 +1,7 @@
 import pandas as pd
 import requests
 import sqlite3
+from mocked_module import mocked_function
 
 
 ## This function provides a way to fetch data from a URL and return it as a DataFrame, with an added check to handle the case where the request is not successful.
@@ -42,3 +43,14 @@ def fetch_user_data(user_id):
         return user
     else:
         return "User record not found"
+
+
+## This function invokes mocked_function and carries out additional operations on the resulting string. 
+def convert_to_upper():
+    # Call the external function
+    result = mocked_function()
+
+    # Perform other operations
+    processed_result = result.upper()
+
+    return processed_result
