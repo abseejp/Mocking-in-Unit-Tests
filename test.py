@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import patch, Mock
 import pandas as pd
-from utility import get_data_and_return_dataframe
+from utility import get_data_and_return_dataframe, fetch_user_data
 
 class TestGetDataAndReturnDataframe(unittest.TestCase):
     @patch('utility.requests.get')
@@ -43,4 +43,50 @@ class TestGetDataAndReturnDataframe(unittest.TestCase):
         self.assertEqual(result, expected_output)
 
         # could add other test assertions
+
+
+class TestFetchUserData(unittest.TestCase):
+    @patch('utility.sqlite3.connect')
+    def test_fetch_user_data_success(self, mock_connect):
+        # Configure the mock cursor
+        mock_cursor = mock_connect.return_value.cursor.return_value
+        mock_cursor.fetchone.return_value = (1, 'Abraham Musa', 'abmusa@example.com', 1)
+
+        # Call the function being tested
+        result = fetch_user_data(1)
+
+        # Verify the expected user data
+        expected_user = {
+            'id': 1,
+            'name': 'Abraham Musa',
+            'email': 'abmusa@example.com',
+            'status': 'active'
+        }
+        self.assertEqual(result, expected_user)
+
+        # Check if the database connection and cursor were called correctly
+        mock_connect.assert_called_once()
+        mock_cursor.execute.assert_called_once_with('SELECT * FROM users WHERE id = ?', (1,))
+        mock_cursor.close.assert_called_once()
+        mock_connect.return_value.close.assert_called_once()
+
+
+
+    @patch('utility.sqlite3.connect')
+    def test_fetch_user_data_not_found(self, mock_connect):
+        # Configure the mock cursor
+        mock_cursor = mock_connect.return_value.cursor.return_value
+        mock_cursor.fetchone.return_value = None
+
+        # Call the function being tested
+        result = fetch_user_data(1)
+
+        # Verify that None is returned when user data is not found
+        self.assertEqual(result, 'User record not found')
+
+        # Check if the database connection and cursor were called correctly
+        mock_connect.assert_called_once()
+        mock_cursor.execute.assert_called_once_with('SELECT * FROM users WHERE id = ?', (1,))
+        mock_cursor.close.assert_called_once()
+        mock_connect.return_value.close.assert_called_once()
 
