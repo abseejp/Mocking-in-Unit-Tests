@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import patch, Mock
 import pandas as pd
-from utility import get_data_and_return_dataframe, fetch_user_data
+from utility import get_data_and_return_dataframe, fetch_user_data, convert_to_upper
 
 class TestGetDataAndReturnDataframe(unittest.TestCase):
     @patch('utility.requests.get')
@@ -90,3 +90,20 @@ class TestFetchUserData(unittest.TestCase):
         mock_cursor.close.assert_called_once()
         mock_connect.return_value.close.assert_called_once()
 
+
+
+class TestUtilityFunction(unittest.TestCase):
+    @patch('utility.external_function')
+    def test_convert_to_upper(self, mock_external_function):
+        # Configure the mock external function
+        mock_external_function.return_value = "Mocked result"
+
+        # Call the function being tested
+        result = convert_to_upper()
+
+        # Verify the expected result
+        expected_result = "MOCKED RESULT"
+        self.assertEqual(result, expected_result)
+
+        # Check if the external function was called
+        mock_external_function.assert_called_once()
