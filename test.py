@@ -93,7 +93,7 @@ class TestFetchUserData(unittest.TestCase):
 
 
 class TestUtilityFunction(unittest.TestCase):
-    @patch('utility.external_function')
+    @patch('utility.mocked_function')
     def test_convert_to_upper(self, mock_external_function):
         # Configure the mock external function
         mock_external_function.return_value = "Mocked result"
