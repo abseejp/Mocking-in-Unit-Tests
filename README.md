@@ -11,6 +11,7 @@ To run the provided code examples and unit tests, follow the simple steps outlin
 - Open a terminal (from your preferred IDE) and navigate to the root folder of the cloned repository.
 - Run the following command to execute the unit tests: pytest ./test.py
 - If everything is set up correctly, you should see all five unit tests within test.py pass, resulting in a 100% success outcome (as shown in the image below).
+
 ![Alt text](image.png)
 
 Prerequisites
