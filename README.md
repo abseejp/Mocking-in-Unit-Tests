@@ -1,4 +1,3 @@
-MOCKING ILLUSTRATION REPOSITORY
 Welcome to the Mocking Illustration Repository! This repository contains a set of Python scripts designed to demonstrate the concept of mocking in unit testing. Additionally, an accompanying article has been written to provide context and insights into the code presented here.
 
 
